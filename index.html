@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ariel Matias Melo - Desarrollador Full Stack & Especialista en Ciberseguridad</title>
+    <meta name="description" content="Portafolio de Ariel Matias Melo - Desarrollador Full Stack especializado en ciberseguridad, estudiante de Ingeniería en Sistemas con pasión por crear experiencias web seguras e innovadoras.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-logo">
+                <span class="logo-text">AM</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#hero" class="nav-link">Inicio</a></li>
+                <li><a href="#proyectos" class="nav-link">Proyectos</a></li>
+                <li><a href="#habilidades" class="nav-link">Habilidades</a></li>
+                <li><a href="#sobre-mi" class="nav-link">Sobre Mí</a></li>
+                <li><a href="#contacto" class="nav-link">Contacto</a></li>
+            </ul>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Hola, soy <span class="highlight">Ariel Matias Melo</span>
+                </h1>
+                <p class="subtitle">
+                    Desarrollador Creativo | Convierto ideas en experiencias web interactivas y seguras
+                </p>
+                <p class="hero-description">
+                    Estudiante de Ingeniería en Sistemas especializado en ciberseguridad y desarrollo web full-stack
+                </p>
+                <div class="hero-buttons">
+                    <a href="#proyectos" class="cta-button primary">
+                        Ver mis proyectos
+                        <svg class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M7 13l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <a href="#contacto" class="cta-button secondary">Contactar</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-elements">
+                    <div class="floating-card">🔐</div>
+                    <div class="floating-card">💻</div>
+                    <div class="floating-card">⚡</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="proyectos" class="projects hidden">
+        <div class="container">
+            <h2 class="section-title">Proyectos Destacados</h2>
+            <div class="project-grid">
+                
+                <!-- Proyecto 1: Credit Card Generator -->
+                <article class="project-card" data-github="https://github.com/mat1520/Credit-Card-Gen-Luhn">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop&crop=center" alt="Credit Card Generator Luhn">
+                        <div class="project-overlay">
+                            <h3>Credit Card Generator Luhn</h3>
+                            <p>Generador de tarjetas de crédito válidas usando algoritmo Luhn para testing y educación</p>
+                            <div class="tech-stack">
+                                <span>JavaScript</span>
+                                <span>HTML5</span>
+                                <span>CSS3</span>
+                                <span>Algoritmo Luhn</span>
+                            </div>
+                            <div class="project-links">
+                                <span class="view-project">Ver Proyecto →</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Proyecto 2: Spotify Clone -->
+                <article class="project-card featured" data-github="https://github.com/mat1520">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&h=400&fit=crop&crop=center" alt="Spotify Clone">
+                        <div class="project-overlay">
+                            <h3>Spotify Clone con Pagos</h3>
+                            <p>Plataforma de streaming musical completa con sistema de pagos y suscripciones premium</p>
+                            <div class="tech-stack">
+                                <span>React</span>
+                                <span>Node.js</span>
+                                <span>Payment Gateway</span>
+                                <span>MongoDB</span>
+                            </div>
+                            <div class="project-links">
+                                <span class="view-project">Ver Proyecto →</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Proyecto 3: Buró de Crédito -->
+                <article class="project-card" data-github="https://github.com/mat1520/BURO-DE-CREDITO-EC">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&h=400&fit=crop&crop=center" alt="Buró de Crédito Ecuador">
+                        <div class="project-overlay">
+                            <h3>Buró de Crédito Ecuador</h3>
+                            <p>Sistema de evaluación crediticia para gestión y análisis de información financiera</p>
+                            <div class="tech-stack">
+                                <span>HTML5</span>
+                                <span>JavaScript</span>
+                                <span>CSS3</span>
+                                <span>Fintech</span>
+                            </div>
+                            <div class="project-links">
+                                <span class="view-project">Ver Proyecto →</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Proyecto 4: API Facturación -->
+                <article class="project-card" data-github="https://github.com/mat1520/api-facturacion-electronica-ecuador">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=600&h=400&fit=crop&crop=center" alt="API Facturación Electrónica">
+                        <div class="project-overlay">
+                            <h3>API Facturación Electrónica</h3>
+                            <p>API REST para facturación electrónica cumpliendo requisitos técnicos del SRI Ecuador</p>
+                            <div class="tech-stack">
+                                <span>PowerShell</span>
+                                <span>REST API</span>
+                                <span>SRI Ecuador</span>
+                                <span>XML</span>
+                            </div>
+                            <div class="project-links">
+                                <span class="view-project">Ver Proyecto →</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Proyecto 5: Yachay Platform -->
+                <article class="project-card" data-github="https://github.com/mat1520/yachay-app">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop&crop=center" alt="Yachay Educational Platform">
+                        <div class="project-overlay">
+                            <h3>Yachay Educational Platform</h3>
+                            <p>Plataforma educativa para gestión académica y aprendizaje interactivo</p>
+                            <div class="tech-stack">
+                                <span>TypeScript</span>
+                                <span>React</span>
+                                <span>Node.js</span>
+                                <span>Education</span>
+                            </div>
+                            <div class="project-links">
+                                <span class="view-project">Ver Proyecto →</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Proyecto 6: Star Wars Detector -->
+                <article class="project-card" data-github="https://github.com/mat1520/Star-Wars-Character-Detector">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop&crop=center" alt="Star Wars Character Detector">
+                        <div class="project-overlay">
+                            <h3>Star Wars Character Detector</h3>
+                            <p>Detector de personajes de Star Wars usando YOLOv8 y deep learning</p>
+                            <div class="tech-stack">
+                                <span>Python</span>
+                                <span>PyTorch</span>
+                                <span>YOLOv8</span>
+                                <span>Computer Vision</span>
+                            </div>
+                            <div class="project-links">
+                                <span class="view-project">Ver Proyecto →</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="habilidades" class="skills hidden">
+        <div class="container">
+            <h2 class="section-title">Mis Habilidades</h2>
+            <div class="skills-grid">
+                <div class="skill-item" data-skill="Python">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+                    <span class="skill-name">Python</span>
+                </div>
+                <div class="skill-item" data-skill="JavaScript">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+                    <span class="skill-name">JavaScript</span>
+                </div>
+                <div class="skill-item" data-skill="TypeScript">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript">
+                    <span class="skill-name">TypeScript</span>
+                </div>
+                <div class="skill-item" data-skill="React">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
+                    <span class="skill-name">React</span>
+                </div>
+                <div class="skill-item" data-skill="Node.js">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js">
+                    <span class="skill-name">Node.js</span>
+                </div>
+                <div class="skill-item" data-skill="Next.js">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="Next.js">
+                    <span class="skill-name">Next.js</span>
+                </div>
+                <div class="skill-item" data-skill="Java">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
+                    <span class="skill-name">Java</span>
+                </div>
+                <div class="skill-item" data-skill="PHP">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP">
+                    <span class="skill-name">PHP</span>
+                </div>
+                <div class="skill-item" data-skill="HTML5">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
+                    <span class="skill-name">HTML5</span>
+                </div>
+                <div class="skill-item" data-skill="CSS3">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
+                    <span class="skill-name">CSS3</span>
+                </div>
+                <div class="skill-item" data-skill="Git">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git">
+                    <span class="skill-name">Git</span>
+                </div>
+                <div class="skill-item" data-skill="Docker">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker">
+                    <span class="skill-name">Docker</span>
+                </div>
+                <div class="skill-item" data-skill="Linux">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux">
+                    <span class="skill-name">Linux</span>
+                </div>
+                <div class="skill-item" data-skill="MongoDB">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB">
+                    <span class="skill-name">MongoDB</span>
+                </div>
+                <div class="skill-item" data-skill="PyTorch">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch">
+                    <span class="skill-name">PyTorch</span>
+                </div>
+                <div class="skill-item" data-skill="VS Code">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code">
+                    <span class="skill-name">VS Code</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="sobre-mi" class="about hidden">
+        <div class="container">
+            <h2 class="section-title">Sobre Mí</h2>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="https://avatars.githubusercontent.com/u/151447878?v=4" alt="Ariel Matias Melo" class="profile-picture">
+                    <div class="image-decoration"></div>
+                </div>
+                <div class="about-text">
+                    <p class="about-intro">
+                        ¡Hola! Soy Ariel Matias Melo, estudiante de <strong>Ingeniería en Sistemas</strong> en la Universidad Internacional del Ecuador (UIDE) con una profunda pasión por la <strong>ciberseguridad</strong> y el <strong>desarrollo web full-stack</strong>.
+                    </p>
+                    <p>
+                        Mi objetivo profesional es convertirme en un especialista en ciberseguridad, enfocándome en el <strong>pentesting</strong> y la protección de infraestructuras críticas. Combino esta pasión por la seguridad con mis habilidades de desarrollo para crear aplicaciones web robustas y seguras.
+                    </p>
+                    <p>
+                        <em>"Siempre investigando nuevas tecnologías para mejorar mis habilidades tecnológicas."</em> Busco constantemente oportunidades para aplicar mis conocimientos en proyectos reales y contribuir a hacer el mundo digital más seguro.
+                    </p>
+                    <div class="about-highlights">
+                        <div class="highlight-item">
+                            <span class="highlight-number">20+</span>
+                            <span class="highlight-text">Proyectos Completados</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-number">5+</span>
+                            <span class="highlight-text">Lenguajes de Programación</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-number">∞</span>
+                            <span class="highlight-text">Ganas de Aprender</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="contact hidden">
+        <div class="container">
+            <h2 class="section-title">¿Tienes una idea?</h2>
+            <p class="contact-subtitle">Creémosla juntos</p>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <p>Estoy disponible para colaboraciones, proyectos freelance, o simplemente para charlar sobre tecnología y ciberseguridad.</p>
+                </div>
+                
+                <div class="contact-links">
+                    <a href="https://github.com/mat1520" target="_blank" rel="noopener noreferrer" class="contact-link github">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                        </svg>
+                        GitHub
+                    </a>
+                    
+                    <a href="https://linkedin.com/in/arielmatiasm" target="_blank" rel="noopener noreferrer" class="contact-link linkedin">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                        LinkedIn
+                    </a>
+                    
+                    <button id="copy-email-btn" class="contact-link email" data-email="ariel.matiasm@example.com">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        Copiar Email
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Ariel Matias Melo. Hecho con 💚 y mucho café ☕</p>
+        </div>
+    </footer>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursor-follower"></div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <span class="notification-text">¡Email copiado al portapapeles!</span>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js" defer></script>
+</body>
+</html>
