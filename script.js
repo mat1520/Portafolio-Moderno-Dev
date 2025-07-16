@@ -1,19 +1,22 @@
 /**
- * ===== PORTAFOLIO MODERNO - SCRIPT PRINCIPAL =====
+ * ===== PORTAFOLIO MODERNO MEJORADO - SCRIPT PRINCIPAL =====
  * Autor: Ariel Matias Melo
- * Funcionalidades: Animaciones, interactividad y UX avanzada
+ * Funcionalidades: Animaciones avanzadas, interactividad y UX de élite
  */
 
 // ===== VARIABLES GLOBALES =====
 let isScrolling = false;
 let cursor = null;
 let cursorFollower = null;
+let scrollProgress = null;
+let heroStatsAnimated = false;
 
 // ===== INICIALIZACIÓN =====
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Portafolio iniciado correctamente');
+    console.log('🚀 Portafolio Moderno v2.0 iniciado correctamente');
     
     // Inicializar todas las funcionalidades
+    initializeScrollProgress();
     initializeCustomCursor();
     initializeTypewriterEffect();
     initializeScrollAnimations();
@@ -21,12 +24,42 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeEmailCopyFunctionality();
     initializeNavigationSmooth();
     initializeMobileMenu();
+    initializeParallaxEffects();
+    initializeHeroStats();
+    
+    // Inicializar sistema de traducción
+    if (typeof i18next !== 'undefined') {
+        initializeI18n();
+        initializeLanguageSelector();
+    }
     
     // Mostrar elementos del hero inmediatamente
     showHeroElements();
+    
+    // Precarga de imágenes
+    preloadCriticalImages();
 });
 
-// ===== CURSOR PERSONALIZADO =====
+// ===== SCROLL PROGRESS BAR =====
+function initializeScrollProgress() {
+    scrollProgress = document.getElementById('scroll-progress');
+    
+    if (scrollProgress) {
+        window.addEventListener('scroll', updateScrollProgress);
+    }
+}
+
+function updateScrollProgress() {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (scrollTop / scrollHeight) * 100;
+    
+    if (scrollProgress) {
+        scrollProgress.style.width = scrolled + '%';
+    }
+}
+
+// ===== CURSOR PERSONALIZADO CORREGIDO =====
 function initializeCustomCursor() {
     // Solo inicializar en dispositivos no táctiles
     if (window.matchMedia("(pointer: fine)").matches) {
@@ -34,11 +67,21 @@ function initializeCustomCursor() {
         cursorFollower = document.getElementById('cursor-follower');
         
         if (cursor && cursorFollower) {
-            // Seguimiento del mouse
-            document.addEventListener('mousemove', updateCursorPosition);
+            // Seguimiento del mouse optimizado
+            document.addEventListener('mousemove', (e) => {
+                // Actualizar cursor principal inmediatamente
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+                
+                // Actualizar follower con un pequeño retraso
+                setTimeout(() => {
+                    cursorFollower.style.left = e.clientX + 'px';
+                    cursorFollower.style.top = e.clientY + 'px';
+                }, 50);
+            });
             
             // Efectos hover en elementos interactivos
-            const interactiveElements = document.querySelectorAll('a, button, .project-card, .skill-item');
+            const interactiveElements = document.querySelectorAll('a, button, .project-card, .skill-item, .nav-link');
             
             interactiveElements.forEach(element => {
                 element.addEventListener('mouseenter', () => {
@@ -55,20 +98,6 @@ function initializeCustomCursor() {
         const cursors = document.querySelectorAll('.cursor, .cursor-follower');
         cursors.forEach(cursor => cursor.style.display = 'none');
         document.body.style.cursor = 'auto';
-    }
-}
-
-function updateCursorPosition(e) {
-    if (cursor && cursorFollower) {
-        // Actualizar posición del cursor principal
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-        
-        // Actualizar posición del seguidor con retraso
-        setTimeout(() => {
-            cursorFollower.style.left = e.clientX + 'px';
-            cursorFollower.style.top = e.clientY + 'px';
-        }, 100);
     }
 }
 
@@ -396,60 +425,262 @@ function initializeMobileMenu() {
     }
 }
 
-// ===== EFECTOS ADICIONALES =====
-
-// Parallax sutil para elementos flotantes
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const floatingElements = document.querySelectorAll('.floating-card');
+// ===== HERO STATS ANIMATION =====
+function initializeHeroStats() {
+    const heroStats = document.querySelector('.hero-stats');
+    if (!heroStats) return;
     
-    floatingElements.forEach((element, index) => {
-        const speed = 0.5 + (index * 0.1);
-        element.style.transform = `translateY(${scrolled * speed}px)`;
-    });
-});
-
-// Efecto de partículas en hover sobre skills
-document.addEventListener('DOMContentLoaded', () => {
-    const skillItems = document.querySelectorAll('.skill-item');
-    
-    skillItems.forEach(item => {
-        item.addEventListener('mouseenter', () => {
-            createParticleEffect(item);
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !heroStatsAnimated) {
+                animateHeroStats();
+                heroStatsAnimated = true;
+            }
         });
     });
-});
-
-function createParticleEffect(element) {
-    const particles = [];
-    const rect = element.getBoundingClientRect();
     
-    for (let i = 0; i < 5; i++) {
+    observer.observe(heroStats);
+}
+
+function animateHeroStats() {
+    const statNumbers = document.querySelectorAll('.stat-number');
+    
+    statNumbers.forEach((stat, index) => {
+        const finalValue = parseInt(stat.textContent);
+        let currentValue = 0;
+        const increment = finalValue / 50; // 50 steps for smooth animation
+        
+        const timer = setInterval(() => {
+            currentValue += increment;
+            if (currentValue >= finalValue) {
+                stat.textContent = stat.textContent.includes('+') ? finalValue + '+' : finalValue;
+                clearInterval(timer);
+            } else {
+                stat.textContent = Math.floor(currentValue);
+            }
+        }, 40); // Update every 40ms
+        
+        // Add stagger delay
+        setTimeout(() => {
+            stat.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                stat.style.transform = 'scale(1)';
+            }, 200);
+        }, index * 200);
+    });
+}
+
+// ===== PARALLAX EFFECTS =====
+function initializeParallaxEffects() {
+    const parallaxElements = document.querySelectorAll('.floating-card');
+    
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        
+        parallaxElements.forEach((element, index) => {
+            const speed = 0.3 + (index * 0.1);
+            const yPos = -(scrolled * speed);
+            element.style.transform = `translateY(${yPos}px)`;
+        });
+    });
+}
+
+// ===== ENHANCED PROJECT INTERACTIONS =====
+function enhanceProjectCard(card) {
+    // Add magnetic effect
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        const moveX = x * 0.1;
+        const moveY = y * 0.1;
+        
+        card.style.transform = `translate(${moveX}px, ${moveY}px) rotateX(${y * 0.05}deg) rotateY(${x * 0.05}deg)`;
+    });
+    
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+    });
+}
+
+// ===== ADVANCED SCROLL ANIMATIONS =====
+function createAdvancedScrollObserver() {
+    const observerOptions = {
+        threshold: [0, 0.1, 0.5, 1],
+        rootMargin: '0px 0px -100px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const element = entry.target;
+            const ratio = entry.intersectionRatio;
+            
+            if (entry.isIntersecting) {
+                element.classList.add('visible');
+                
+                // Trigger different animations based on element type
+                if (element.classList.contains('skill-item')) {
+                    setTimeout(() => {
+                        element.style.transform = 'translateY(0) scale(1)';
+                        element.style.opacity = '1';
+                    }, Math.random() * 300);
+                }
+                
+                if (element.classList.contains('project-card')) {
+                    enhanceProjectCard(element);
+                }
+            }
+            
+            // Update elements based on scroll ratio
+            if (ratio > 0) {
+                element.style.opacity = Math.min(ratio * 2, 1);
+                element.style.transform = `translateY(${(1 - ratio) * 50}px)`;
+            }
+        });
+    }, observerOptions);
+    
+    return observer;
+}
+
+// ===== ENHANCED TYPEWRITER EFFECT =====
+function createAdvancedTypewriter(element, text, options = {}) {
+    const {
+        speed = 50,
+        deleteSpeed = 30,
+        pauseDuration = 2000,
+        showCursor = true
+    } = options;
+    
+    let index = 0;
+    let isDeleting = false;
+    
+    function type() {
+        const currentText = text.substring(0, index);
+        element.textContent = currentText;
+        
+        if (showCursor) {
+            element.style.borderRight = '2px solid #06B6D4';
+            element.style.animation = 'blink 1s infinite';
+        }
+        
+        if (!isDeleting && index === text.length) {
+            setTimeout(() => {
+                isDeleting = true;
+                setTimeout(type, deleteSpeed);
+            }, pauseDuration);
+            return;
+        }
+        
+        if (isDeleting && index === 0) {
+            isDeleting = false;
+        }
+        
+        if (isDeleting) {
+            index--;
+        } else {
+            index++;
+        }
+        
+        const currentSpeed = isDeleting ? deleteSpeed : speed;
+        setTimeout(type, currentSpeed + Math.random() * 50);
+    }
+    
+    type();
+}
+
+// ===== PERFORMANCE OPTIMIZATIONS =====
+function preloadCriticalImages() {
+    const criticalImages = [
+        'https://avatars.githubusercontent.com/u/151447878?v=4'
+    ];
+    
+    criticalImages.forEach(src => {
+        const img = new Image();
+        img.src = src;
+    });
+}
+
+function debounce(func, wait, immediate) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            timeout = null;
+            if (!immediate) func(...args);
+        };
+        const callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func(...args);
+    };
+}
+
+// ===== INTERSECTION OBSERVER IMPROVEMENTS =====
+function createSmartObserver() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                
+                // Add special effects for different elements
+                if (entry.target.classList.contains('hero-stats')) {
+                    animateHeroStats();
+                }
+                
+                if (entry.target.classList.contains('skill-item')) {
+                    setTimeout(() => {
+                        createParticleExplosion(entry.target);
+                    }, Math.random() * 500);
+                }
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+    
+    return observer;
+}
+
+// ===== PARTICLE EXPLOSION EFFECT =====
+function createParticleExplosion(element) {
+    const rect = element.getBoundingClientRect();
+    const particles = [];
+    const particleCount = 8;
+    
+    for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
-        particle.style.position = 'fixed';
-        particle.style.width = '4px';
-        particle.style.height = '4px';
-        particle.style.background = '#007BFF';
-        particle.style.borderRadius = '50%';
-        particle.style.pointerEvents = 'none';
-        particle.style.zIndex = '9999';
-        particle.style.left = rect.left + rect.width / 2 + 'px';
-        particle.style.top = rect.top + rect.height / 2 + 'px';
+        particle.style.cssText = `
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: linear-gradient(45deg, #6366F1, #8B5CF6);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            left: ${rect.left + rect.width / 2}px;
+            top: ${rect.top + rect.height / 2}px;
+        `;
         
         document.body.appendChild(particle);
         particles.push(particle);
         
-        // Animar partícula
-        const angle = (i / 5) * Math.PI * 2;
-        const distance = 50;
-        const x = Math.cos(angle) * distance;
-        const y = Math.sin(angle) * distance;
+        const angle = (i / particleCount) * Math.PI * 2;
+        const velocity = 100 + Math.random() * 50;
+        const x = Math.cos(angle) * velocity;
+        const y = Math.sin(angle) * velocity;
         
         particle.animate([
-            { transform: 'translate(0, 0)', opacity: 1 },
-            { transform: `translate(${x}px, ${y}px)`, opacity: 0 }
+            { 
+                transform: 'translate(0, 0) scale(1)', 
+                opacity: 1 
+            },
+            { 
+                transform: `translate(${x}px, ${y}px) scale(0)`, 
+                opacity: 0 
+            }
         ], {
-            duration: 600,
+            duration: 800,
             easing: 'ease-out'
         }).onfinish = () => {
             particle.remove();
@@ -457,58 +688,240 @@ function createParticleEffect(element) {
     }
 }
 
-// ===== PERFORMANCE Y OPTIMIZACIÓN =====
-
-// Debounce para eventos de scroll
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
+// ===== ENHANCED MOBILE MENU =====
+function enhanceMobileMenu() {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', () => {
+            const isOpen = navMenu.classList.contains('active');
+            
+            if (!isOpen) {
+                navMenu.classList.add('active');
+                navToggle.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Animate menu items
+                const menuItems = navMenu.querySelectorAll('.nav-link');
+                menuItems.forEach((item, index) => {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(20px)';
+                    
+                    setTimeout(() => {
+                        item.style.transition = 'all 0.3s ease';
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+            } else {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
 }
 
-// Aplicar debounce a eventos de scroll costosos
-const debouncedScrollHandler = debounce(() => {
-    updateActiveNavLinkOnScroll();
-}, 100);
-
-window.addEventListener('scroll', debouncedScrollHandler);
-
-// Precargar imágenes importantes
-function preloadImages() {
-    const imageUrls = [
-        'https://avatars.githubusercontent.com/u/151447878?v=4'
-    ];
+// ===== CSS ANIMATIONS =====
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes blink {
+        0%, 50% { border-color: transparent; }
+        51%, 100% { border-color: #06B6D4; }
+    }
     
-    imageUrls.forEach(url => {
-        const img = new Image();
-        img.src = url;
+    .hero-stats {
+        display: flex;
+        gap: 2rem;
+        margin-top: 2rem;
+        justify-content: center;
+    }
+    
+    .stat-item {
+        text-align: center;
+        padding: 1rem;
+        background: rgba(26, 26, 46, 0.5);
+        border: 1px solid rgba(240, 240, 247, 0.1);
+        border-radius: 12px;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        min-width: 100px;
+    }
+    
+    .stat-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+    }
+    
+    .stat-number {
+        display: block;
+        font-size: 1.8rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #6366F1, #8B5CF6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        transition: transform 0.3s ease;
+    }
+    
+    .stat-label {
+        font-size: 0.9rem;
+        color: rgba(184, 184, 200, 0.8);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    @media (max-width: 768px) {
+        .hero-stats {
+            gap: 1rem;
+        }
+        
+        .stat-item {
+            min-width: 80px;
+            padding: 0.8rem;
+        }
+        
+        .stat-number {
+            font-size: 1.4rem;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+        }
+    }
+`;
+document.head.appendChild(style);
+
+// ===== SISTEMA DE TRADUCCIÓN I18N =====
+const translations = {
+    es: {
+        nav: {
+            home: "Inicio",
+            projects: "Proyectos",
+            skills: "Habilidades",
+            about: "Sobre Mí",
+            contact: "Contacto"
+        },
+        hero: {
+            greeting: "Hola, soy",
+            subtitle: "Estudiante de Ingeniería en Sistemas | Apasionado por la Ciberseguridad | Desarrollo Web",
+            description: "Estudiante de 3er semestre de Ingeniería en Sistemas con gran interés en ciberseguridad y desarrollo web. Buscando oportunidades para aprender y crecer profesionalmente.",
+            viewPortfolio: "Ver Portfolio"
+        },
+        projects: {
+            title: "Proyectos Destacados",
+            subtitle: "Algunos de mis trabajos más recientes"
+        },
+        skills: {
+            title: "Habilidades Técnicas", 
+            subtitle: "Tecnologías que estoy aprendiendo"
+        },
+        about: {
+            title: "Sobre Mí",
+            subtitle: "Conoce mi historia"
+        },
+        contact: {
+            title: "Contáctame",
+            subtitle: "¿Listo para trabajar juntos?"
+        }
+    },
+    en: {
+        nav: {
+            home: "Home",
+            projects: "Projects",
+            skills: "Skills",
+            about: "About Me",
+            contact: "Contact"
+        },
+        hero: {
+            greeting: "Hello, I'm",
+            subtitle: "Systems Engineering Student | Passionate about Cybersecurity | Web Development",
+            description: "3rd semester Systems Engineering student with great interest in cybersecurity and web development. Looking for opportunities to learn and grow professionally.",
+            viewPortfolio: "View Portfolio"
+        },
+        projects: {
+            title: "Featured Projects",
+            subtitle: "Some of my recent work"
+        },
+        skills: {
+            title: "Technical Skills",
+            subtitle: "Technologies I'm learning"
+        },
+        about: {
+            title: "About Me",
+            subtitle: "Get to know my story"
+        },
+        contact: {
+            title: "Contact Me",
+            subtitle: "Ready to work together?"
+        }
+    }
+};
+
+// Configuración de i18next
+function initializeI18n() {
+    if (typeof i18next !== 'undefined') {
+        i18next
+            .use(i18nextBrowserLanguageDetector)
+            .init({
+                lng: 'es', // idioma por defecto
+                fallbackLng: 'es',
+                resources: {
+                    es: { translation: translations.es },
+                    en: { translation: translations.en }
+                }
+            }, function(err, t) {
+                if (err) console.error('Error inicializando i18next:', err);
+                updateContent();
+            });
+    }
+}
+
+// Actualizar contenido con traducciones
+function updateContent() {
+    if (typeof i18next === 'undefined') return;
+    
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        const translation = i18next.t(key);
+        if (translation && translation !== key) {
+            element.textContent = translation;
+        }
     });
 }
 
-// Inicializar precarga después de que la página se cargue
-window.addEventListener('load', preloadImages);
-
-// ===== ANALYTICS Y SEGUIMIENTO (Opcional) =====
-function trackUserInteraction(action, element) {
-    console.log(`🎯 Interacción: ${action} en ${element}`);
-    // Aquí se puede integrar con Google Analytics o similar
+// Cambiar idioma
+function changeLanguage(lang) {
+    if (typeof i18next === 'undefined') return;
+    
+    i18next.changeLanguage(lang, () => {
+        updateContent();
+        
+        // Actualizar botones activos
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
+        
+        // Actualizar atributo lang del HTML
+        document.documentElement.setAttribute('lang', lang);
+    });
 }
 
-// Trackear clics en proyectos
-document.addEventListener('click', (e) => {
-    if (e.target.closest('.project-card')) {
-        trackUserInteraction('project_click', e.target.closest('.project-card').querySelector('h3').textContent);
-    }
-    
-    if (e.target.closest('.contact-link')) {
-        trackUserInteraction('contact_click', e.target.closest('.contact-link').textContent.trim());
-    }
-});
+// Inicializar eventos de idioma
+function initializeLanguageSelector() {
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const lang = btn.getAttribute('data-lang');
+            changeLanguage(lang);
+        });
+    });
+}
 
-console.log('✨ Script cargado completamente. ¡Portafolio listo para impresionar!');
+// Inicializar sistema de traducción
+if (typeof i18next !== 'undefined') {
+    initializeI18n();
+    initializeLanguageSelector();
+}
