@@ -820,11 +820,11 @@ const translations = {
         },
         about: {
             title: "Sobre Mí",
-            subtitle: "Conoce mi historia"
+            subtitle: "Conoce mi historia y experiencia"
         },
         contact: {
-            title: "Contáctame",
-            subtitle: "¿Listo para trabajar juntos?"
+            title: "¿Tienes una idea?",
+            subtitle: "Creémosla juntos"
         }
     },
     en: {
@@ -851,11 +851,11 @@ const translations = {
         },
         about: {
             title: "About Me",
-            subtitle: "Get to know my story"
+            subtitle: "Get to know my story and experience"
         },
         contact: {
-            title: "Contact Me",
-            subtitle: "Ready to work together?"
+            title: "Do you have an idea?",
+            subtitle: "Let's create it together"
         }
     }
 };
@@ -886,8 +886,18 @@ function updateContent() {
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
         const translation = i18next.t(key);
+        
         if (translation && translation !== key) {
-            element.textContent = translation;
+            // Guardar el HTML interno antes de cambiar el texto
+            const innerHTML = element.innerHTML;
+            
+            // Si el elemento contiene solo texto, actualizar directamente
+            if (element.children.length === 0) {
+                element.textContent = translation;
+            } else {
+                // Para elementos con HTML, reemplazar solo el texto manteniendo los elementos
+                element.innerHTML = innerHTML.replace(element.textContent.trim(), translation);
+            }
         }
     });
 }
