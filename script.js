@@ -106,29 +106,38 @@ function initializeTypewriterEffect() {
     const subtitle = document.querySelector('.subtitle');
     if (!subtitle) return;
     
-    const text = subtitle.textContent;
-    subtitle.textContent = '';
-    subtitle.style.opacity = '1';
-    
-    let index = 0;
-    const speed = 50; // Velocidad de escritura en ms
-    
-    function typeWriter() {
-        if (index < text.length) {
-            subtitle.textContent += text.charAt(index);
-            index++;
-            setTimeout(typeWriter, speed);
-        } else {
-            // Añadir efecto de cursor parpadeante al final
-            subtitle.style.borderRight = '2px solid #00D4FF';
-            setTimeout(() => {
-                subtitle.style.borderRight = 'none';
-            }, 2000);
+    // Esperar a que el sistema de traducción se haya inicializado
+    setTimeout(() => {
+        const text = subtitle.textContent || subtitle.getAttribute('data-original-text');
+        
+        // Guardar el texto original para futuras traducciones
+        if (!subtitle.getAttribute('data-original-text')) {
+            subtitle.setAttribute('data-original-text', text);
         }
-    }
-    
-    // Iniciar el efecto después de un breve retraso
-    setTimeout(typeWriter, 1000);
+        
+        subtitle.textContent = '';
+        subtitle.style.opacity = '1';
+        
+        let index = 0;
+        const speed = 50; // Velocidad de escritura en ms
+        
+        function typeWriter() {
+            if (index < text.length) {
+                subtitle.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, speed);
+            } else {
+                // Añadir efecto de cursor parpadeante al final
+                subtitle.style.borderRight = '2px solid #00D4FF';
+                setTimeout(() => {
+                    subtitle.style.borderRight = 'none';
+                }, 2000);
+            }
+        }
+        
+        // Iniciar el efecto después de un breve retraso
+        setTimeout(typeWriter, 500);
+    }, 1500); // Esperar a que se complete la inicialización
 }
 
 // ===== ANIMACIONES DE SCROLL =====
@@ -242,7 +251,16 @@ function initializeEmailCopyFunctionality() {
     const notification = document.getElementById('notification');
     
     if (copyEmailBtn && notification) {
-        copyEmailBtn.addEventListener('click', async () => {
+        // Variable para evitar múltiples clics
+        let isProcessing = false;
+        
+        copyEmailBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            
+            // Evitar múltiples clics mientras se procesa
+            if (isProcessing) return;
+            isProcessing = true;
+            
             const email = copyEmailBtn.getAttribute('data-email');
             
             try {
@@ -288,11 +306,13 @@ function initializeEmailCopyFunctionality() {
                         </svg>
                         Copiar Email
                     `;
+                    isProcessing = false;
                 }, 2000);
                 
             } catch (err) {
                 console.error('Error al copiar email:', err);
                 showNotification('Error al copiar email ❌');
+                isProcessing = false;
             }
         });
     }
@@ -302,6 +322,11 @@ function showNotification(message) {
     const notification = document.getElementById('notification');
     if (!notification) return;
     
+    // Evitar notificaciones duplicadas
+    if (notification.classList.contains('show')) {
+        return;
+    }
+    
     const textElement = notification.querySelector('.notification-text');
     if (textElement) {
         textElement.textContent = message;
@@ -309,8 +334,14 @@ function showNotification(message) {
     
     notification.classList.add('show');
     
-    setTimeout(() => {
+    // Limpiar cualquier timeout previo
+    if (notification.hideTimeout) {
+        clearTimeout(notification.hideTimeout);
+    }
+    
+    notification.hideTimeout = setTimeout(() => {
         notification.classList.remove('show');
+        delete notification.hideTimeout;
     }, 3000);
 }
 
@@ -862,7 +893,9 @@ const translations = {
 
 // Configuración de i18next
 function initializeI18n() {
-    if (typeof i18next !== 'undefined') {
+    if (typeof i18next !== 'undefined' && !window.i18nInitialized) {
+        window.i18nInitialized = true;
+        
         i18next
             .use(i18nextBrowserLanguageDetector)
             .init({
@@ -934,10 +967,4 @@ function initializeLanguageSelector() {
             changeLanguage(lang);
         });
     });
-}
-
-// Inicializar sistema de traducción
-if (typeof i18next !== 'undefined') {
-    initializeI18n();
-    initializeLanguageSelector();
 }
