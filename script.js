@@ -883,20 +883,21 @@ function initializeI18n() {
 function updateContent() {
     if (typeof i18next === 'undefined') return;
     
-    document.querySelectorAll('[data-i18n]').forEach(element => {
+    document.querySelectorAll('[data-i18n]:not([data-translated])').forEach(element => {
         const key = element.getAttribute('data-i18n');
         const translation = i18next.t(key);
         
         if (translation && translation !== key) {
-            // Guardar el HTML interno antes de cambiar el texto
-            const innerHTML = element.innerHTML;
+            // Marcar elemento como ya traducido
+            element.setAttribute('data-translated', 'true');
             
             // Si el elemento contiene solo texto, actualizar directamente
             if (element.children.length === 0) {
                 element.textContent = translation;
             } else {
                 // Para elementos con HTML, reemplazar solo el texto manteniendo los elementos
-                element.innerHTML = innerHTML.replace(element.textContent.trim(), translation);
+                const originalText = element.textContent.trim();
+                element.innerHTML = element.innerHTML.replace(originalText, translation);
             }
         }
     });
@@ -905,6 +906,11 @@ function updateContent() {
 // Cambiar idioma
 function changeLanguage(lang) {
     if (typeof i18next === 'undefined') return;
+    
+    // Limpiar marcas de traducción previas
+    document.querySelectorAll('[data-translated]').forEach(element => {
+        element.removeAttribute('data-translated');
+    });
     
     i18next.changeLanguage(lang, () => {
         updateContent();
