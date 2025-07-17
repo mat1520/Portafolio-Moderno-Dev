@@ -1309,7 +1309,7 @@ section {
     bottom: 1rem;
     right: 1rem;
     left: 1rem;
-    background: var(--success-color);
+    background: var(--accent-tertiary);
     color: white;
     padding: 1rem;
     border-radius: var(--border-radius-lg);
@@ -1317,14 +1317,21 @@ section {
     z-index: 1000;
     text-align: center;
     transition: transform var(--transition-normal);
+    transform: translateY(200px); /* Oculto por defecto */
+    opacity: 0;
+    pointer-events: none;
 }
 
 #notification.show {
     transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
 }
 
 #notification.hidden {
     transform: translateY(200px);
+    opacity: 0;
+    pointer-events: none;
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
@@ -1518,10 +1525,14 @@ section {
     left: 1rem;
     bottom: 1rem;
     transform: translateY(200px);
+    opacity: 0;
+    pointer-events: none;
   }
   
   .notification.show {
     transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
   }
   
   .nav-menu {

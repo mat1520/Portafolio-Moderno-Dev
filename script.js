@@ -15,6 +15,13 @@ let heroStatsAnimated = false;
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 Portafolio Moderno v2.0 iniciado correctamente');
     
+    // Asegurar que la notificación esté oculta al inicio
+    const notification = document.getElementById('notification');
+    if (notification) {
+        notification.classList.remove('show');
+        notification.classList.add('hidden');
+    }
+    
     // Inicializar todas las funcionalidades
     initializeScrollProgress();
     initializeCustomCursor();
@@ -327,12 +334,20 @@ function showNotification(message) {
         return;
     }
     
+    // Asegurar que esté oculta primero
+    notification.classList.remove('show');
+    notification.classList.add('hidden');
+    
     const textElement = notification.querySelector('.notification-text');
     if (textElement) {
         textElement.textContent = message;
     }
     
-    notification.classList.add('show');
+    // Pequeño delay para asegurar que la transición funcione
+    setTimeout(() => {
+        notification.classList.remove('hidden');
+        notification.classList.add('show');
+    }, 10);
     
     // Limpiar cualquier timeout previo
     if (notification.hideTimeout) {
@@ -341,6 +356,7 @@ function showNotification(message) {
     
     notification.hideTimeout = setTimeout(() => {
         notification.classList.remove('show');
+        notification.classList.add('hidden');
         delete notification.hideTimeout;
     }, 3000);
 }
