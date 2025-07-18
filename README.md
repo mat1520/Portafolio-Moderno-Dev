@@ -30,7 +30,7 @@ Portafolio profesional de **Ariel Matias Melo** - Estudiante de Ingeniería en S
 
 <div align="center">
 
-| Inicio | Sobre Mí | Proyectos |
+| Inicio | Sobre Mí | Notifiaciones |
 |--------|----------|-----------|
 | ![Bienvenido](./Bienvenido.png) | ![Sobre Mí](./SobreMi.png) | ![Notificación](./Notification_Email.png) |
 
