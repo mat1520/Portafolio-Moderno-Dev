@@ -877,7 +877,30 @@ const translations = {
         },
         contact: {
             title: "¿Tienes una idea?",
-            subtitle: "Creémosla juntos"
+            subtitle: "Creémosla juntos",
+            description: "Estoy disponible para colaboraciones, proyectos freelance, o simplemente para charlar sobre tecnología y ciberseguridad.",
+            github: "GitHub",
+            telegram: "Telegram", 
+            whatsapp: "WhatsApp",
+            copyEmail: "Copiar Email"
+        },
+        hero: {
+            greeting: "Hola, soy",
+            subtitle: "Estudiante de Ingeniería en Sistemas | Apasionado por la Ciberseguridad | Desarrollo Web",
+            description: "Estudiante de 3er semestre de Ingeniería en Sistemas con gran interés en ciberseguridad y desarrollo web. Buscando oportunidades para aprender y crecer profesionalmente.",
+            viewPortfolio: "Ver Portfolio",
+            github: "GitHub",
+            projectsLabel: "Proyectos",
+            technologiesLabel: "Tecnologías", 
+            semesterLabel: "Semestre"
+        },
+        projects: {
+            title: "Proyectos Destacados",
+            subtitle: "Algunos de mis trabajos más recientes",
+            viewProject: "Ver Proyecto →"
+        },
+        footer: {
+            copyright: "© 2025 Ariel Matias Melo. Hecho con 💚 y mucho café ☕"
         }
     },
     en: {
@@ -914,7 +937,30 @@ const translations = {
         },
         contact: {
             title: "Do you have an idea?",
-            subtitle: "Let's create it together"
+            subtitle: "Let's create it together",
+            description: "I'm available for collaborations, freelance projects, or simply to chat about technology and cybersecurity.",
+            github: "GitHub",
+            telegram: "Telegram",
+            whatsapp: "WhatsApp", 
+            copyEmail: "Copy Email"
+        },
+        hero: {
+            greeting: "Hello, I'm",
+            subtitle: "Systems Engineering Student | Passionate about Cybersecurity | Web Development",
+            description: "3rd semester Systems Engineering student with great interest in cybersecurity and web development. Looking for opportunities to learn and grow professionally.",
+            viewPortfolio: "View Portfolio",
+            github: "GitHub",
+            projectsLabel: "Projects",
+            technologiesLabel: "Technologies",
+            semesterLabel: "Semester"
+        },
+        projects: {
+            title: "Featured Projects",
+            subtitle: "Some of my recent work",
+            viewProject: "View Project →"
+        },
+        footer: {
+            copyright: "© 2025 Ariel Matias Melo. Made with 💚 and lots of coffee ☕"
         }
     }
 };
