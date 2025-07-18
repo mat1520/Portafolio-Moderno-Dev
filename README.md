@@ -151,19 +151,6 @@ El portafolio incluye algunos de mis proyectos más relevantes:
 - 📄 **[API Facturación Electrónica](https://github.com/mat1520/api-facturacion-electronica-ecuador)** - API para facturación electrónica
 - 🎓 **[Yachay App](https://github.com/mat1520/yachay-app)** - Aplicación educativa
 - 🌟 **[Star Wars Character Detector](https://github.com/mat1520/Star-Wars-Character-Detector)** - Detector de personajes
-- Modifica los estilos en `style.css` o en `assets/css/`
-- Añade funcionalidades en `script.js` o en `assets/js/`
-- Reemplaza las imágenes en `assets/images/`
-
-## Contribución
-1. Fork el proyecto
-### 🔧 Personalización
-
-1. **Información Personal**: Edita las variables en `index.html`
-2. **Estilos**: Modifica las CSS Custom Properties en `assets/css/style.css`
-3. **Traducciones**: Actualiza los objetos de traducción en `assets/js/script.js`
-4. **Proyectos**: Añade tus proyectos en la sección correspondiente
-- Personaliza los estilos y colores según tu marca personal
 
 ## 📊 Métricas del Proyecto
 
