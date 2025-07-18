@@ -274,7 +274,7 @@ function initializeEmailCopyFunctionality() {
                 // Usar la API moderna del portapapeles
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     await navigator.clipboard.writeText(email);
-                    showNotification('¡Email copiado al portapapeles! 📧');
+                    showNotification(i18next.t('notifications.emailCopied'));
                 } else {
                     // Fallback para navegadores más antiguos
                     const textArea = document.createElement('textarea');
@@ -287,9 +287,9 @@ function initializeEmailCopyFunctionality() {
                     textArea.select();
                     
                     if (document.execCommand('copy')) {
-                        showNotification('¡Email copiado al portapapeles! 📧');
+                        showNotification(i18next.t('notifications.emailCopied'));
                     } else {
-                        showNotification('Error al copiar email ❌');
+                        showNotification(i18next.t('notifications.emailError'));
                     }
                     
                     document.body.removeChild(textArea);
@@ -301,7 +301,7 @@ function initializeEmailCopyFunctionality() {
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="20,6 9,17 4,12"/>
                     </svg>
-                    ¡Copiado!
+                    <span data-i18n="notifications.copied">${i18next.t('notifications.copied')}</span>
                 `;
                 
                 setTimeout(() => {
@@ -311,14 +311,14 @@ function initializeEmailCopyFunctionality() {
                             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                             <polyline points="22,6 12,13 2,6"/>
                         </svg>
-                        Copiar Email
+                        <span data-i18n="contact.copyEmail">${i18next.t('contact.copyEmail')}</span>
                     `;
                     isProcessing = false;
                 }, 2000);
                 
             } catch (err) {
                 console.error('Error al copiar email:', err);
-                showNotification('Error al copiar email ❌');
+                showNotification(i18next.t('notifications.emailError'));
                 isProcessing = false;
             }
         });
@@ -899,6 +899,11 @@ const translations = {
             subtitle: "Algunos de mis trabajos más recientes",
             viewProject: "Ver Proyecto →"
         },
+        notifications: {
+            emailCopied: "¡Email copiado al portapapeles! 📧",
+            emailError: "Error al copiar email ❌",
+            copied: "¡Copiado!"
+        },
         footer: {
             copyright: "© 2025 Ariel Matias Melo. Hecho con 💚 y mucho café ☕"
         }
@@ -958,6 +963,11 @@ const translations = {
             title: "Featured Projects",
             subtitle: "Some of my recent work",
             viewProject: "View Project →"
+        },
+        notifications: {
+            emailCopied: "Email copied to clipboard! 📧",
+            emailError: "Error copying email ❌",
+            copied: "Copied!"
         },
         footer: {
             copyright: "© 2025 Ariel Matias Melo. Made with 💚 and lots of coffee ☕"
