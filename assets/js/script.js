@@ -867,7 +867,13 @@ const translations = {
         },
         about: {
             title: "Sobre Mí",
-            subtitle: "Conoce mi historia y experiencia"
+            subtitle: "Conoce mi historia y experiencia",
+            intro: "¡Hola! Soy Ariel Matias Melo, estudiante de <strong>3er semestre de Ingeniería en Sistemas</strong> en la Universidad Internacional del Ecuador (UIDE) con una profunda pasión por la <strong>ciberseguridad</strong> y el <strong>desarrollo web full-stack</strong>.",
+            description: "Mi objetivo profesional es ingresar al mundo laboral tecnológico aplicando mis habilidades en proyectos reales. Me especializo en <strong>pentesting</strong>, <strong>desarrollo web seguro</strong> y <strong>análisis de vulnerabilidades</strong>. Busco constantemente oportunidades para crecer profesionalmente y contribuir a hacer el mundo digital más seguro.",
+            quote: "\"Siempre investigando nuevas tecnologías para mejorar mis habilidades y estar al día con las últimas tendencias del sector.\" Mi enfoque está en combinar la seguridad informática con el desarrollo web para crear soluciones robustas y confiables.",
+            projects: "Proyectos Completados",
+            languages: "Lenguajes de Programación",
+            passion: "Ganas de Aprender"
         },
         contact: {
             title: "¿Tienes una idea?",
@@ -898,7 +904,13 @@ const translations = {
         },
         about: {
             title: "About Me",
-            subtitle: "Get to know my story and experience"
+            subtitle: "Get to know my story and experience",
+            intro: "Hello! I'm Ariel Matias Melo, a <strong>3rd semester Systems Engineering</strong> student at the International University of Ecuador (UIDE) with a deep passion for <strong>cybersecurity</strong> and <strong>full-stack web development</strong>.",
+            description: "My professional goal is to enter the technological job market by applying my skills in real projects. I specialize in <strong>pentesting</strong>, <strong>secure web development</strong> and <strong>vulnerability analysis</strong>. I constantly seek opportunities to grow professionally and contribute to making the digital world more secure.",
+            quote: "\"Always researching new technologies to improve my skills and stay current with the latest industry trends.\" My focus is on combining computer security with web development to create robust and reliable solutions.",
+            projects: "Projects Completed",
+            languages: "Programming Languages",
+            passion: "Passion to Learn"
         },
         contact: {
             title: "Do you have an idea?",
@@ -917,13 +929,18 @@ function initializeI18n() {
             .init({
                 lng: 'es', // idioma por defecto
                 fallbackLng: 'es',
+                debug: false,
                 resources: {
                     es: { translation: translations.es },
                     en: { translation: translations.en }
                 }
             }, function(err, t) {
-                if (err) console.error('Error inicializando i18next:', err);
-                updateContent();
+                if (err) {
+                    console.error('Error inicializando i18next:', err);
+                } else {
+                    console.log('✅ i18next inicializado correctamente');
+                    updateContent();
+                }
             });
     }
 }
@@ -931,6 +948,8 @@ function initializeI18n() {
 // Actualizar contenido con traducciones
 function updateContent() {
     if (typeof i18next === 'undefined') return;
+    
+    console.log('🔄 Actualizando contenido con traducciones...');
     
     document.querySelectorAll('[data-i18n]:not([data-translated])').forEach(element => {
         const key = element.getAttribute('data-i18n');
@@ -940,38 +959,48 @@ function updateContent() {
             // Marcar elemento como ya traducido
             element.setAttribute('data-translated', 'true');
             
-            // Si el elemento contiene solo texto, actualizar directamente
-            if (element.children.length === 0) {
-                element.textContent = translation;
-            } else {
-                // Para elementos con HTML, reemplazar solo el texto manteniendo los elementos
-                const originalText = element.textContent.trim();
-                element.innerHTML = element.innerHTML.replace(originalText, translation);
-            }
+            // Usar innerHTML para mantener el formato HTML (negritas, cursivas, etc.)
+            element.innerHTML = translation;
+            
+            console.log(`✅ Traducido: ${key} -> "${translation.substring(0, 50)}..."`);
+        } else {
+            console.warn(`⚠️ No se encontró traducción para: ${key}`);
         }
     });
+    
+    console.log('🎯 Actualización de contenido completada');
 }
 
 // Cambiar idioma
 function changeLanguage(lang) {
     if (typeof i18next === 'undefined') return;
     
+    console.log(`🌍 Cambiando idioma a: ${lang}`);
+    
     // Limpiar marcas de traducción previas
     document.querySelectorAll('[data-translated]').forEach(element => {
         element.removeAttribute('data-translated');
     });
     
-    i18next.changeLanguage(lang, () => {
-        updateContent();
-        
-        // Actualizar botones activos
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
-        
-        // Actualizar atributo lang del HTML
-        document.documentElement.setAttribute('lang', lang);
+    i18next.changeLanguage(lang, (err, t) => {
+        if (err) {
+            console.error('Error cambiando idioma:', err);
+        } else {
+            console.log(`✅ Idioma cambiado a: ${lang}`);
+            updateContent();
+            
+            // Actualizar botones activos
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            const activeBtn = document.querySelector(`[data-lang="${lang}"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
+            
+            // Actualizar atributo lang del HTML
+            document.documentElement.setAttribute('lang', lang);
+        }
     });
 }
 
