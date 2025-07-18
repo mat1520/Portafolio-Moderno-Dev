@@ -424,16 +424,13 @@ body::before {
   line-height: 1.1;
   margin-bottom: 2rem;
   text-shadow: 0 0 40px rgba(99, 102, 241, 0.3);
-}
-
-.title-line {
-  display: block;
-  width: 100%;
+  text-align: center;
 }
 
 .greeting-text {
   display: inline;
   color: var(--text-primary);
+  font-size: inherit;
 }
 
 .highlight {
@@ -445,35 +442,52 @@ body::before {
   display: inline-block;
 }
 
-.mobile-break {
-  display: none;
-}
-
 .name-highlight {
-  white-space: normal;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  hyphens: auto;
-  display: inline;
-  visibility: visible;
-  opacity: 1;
-  min-width: 0;
-  max-width: 100%;
+  display: inline-block;
+  font-size: inherit;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  white-space: nowrap;
 }
 
-/* Regla de emergencia para asegurar visibilidad del nombre */
-.hero-title .name-highlight {
-  visibility: visible !important;
-  opacity: 1 !important;
-  display: block !important;
-  color: transparent !important;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-  font-weight: 700 !important;
-  text-rendering: optimizeLegibility !important;
-  -webkit-font-smoothing: antialiased !important;
+/* Forzar visibilidad en móviles */
+@media screen and (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+    line-height: 1.2;
+  }
+  
+  .name-highlight {
+    white-space: normal;
+    word-break: break-word;
+    display: inline-block;
+    font-size: 2rem;
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .name-highlight {
+    font-size: 1.6rem;
+  }
+}
+
+@media screen and (max-width: 393px) {
+  .hero-title {
+    font-size: 1.8rem;
+  }
+  
+  .name-highlight {
+    font-size: 1.4rem;
+  }
 }
 
 .highlight::after {

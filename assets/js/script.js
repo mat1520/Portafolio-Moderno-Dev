@@ -253,80 +253,59 @@ function initializeProjectInteractions() {
     });
 }
 
-// ===== RESPONSIVE TITLE ADJUSTMENT =====
+// ===== FORZAR VISIBILIDAD DEL NOMBRE =====
 function initializeResponsiveTitle() {
-    const heroTitle = document.querySelector('.hero-title');
-    const nameHighlight = document.querySelector('.name-highlight');
-    const greetingText = document.querySelector('.greeting-text');
+    const nameElement = document.getElementById('name-display');
     
-    if (!heroTitle || !nameHighlight) return;
+    if (!nameElement) return;
     
-    function forceNameVisibility() {
-        // Forzar visibilidad del nombre
-        nameHighlight.style.visibility = 'visible';
-        nameHighlight.style.opacity = '1';
-        nameHighlight.style.display = 'block';
-        nameHighlight.style.whiteSpace = 'normal';
-        nameHighlight.style.wordBreak = 'break-word';
-        nameHighlight.style.overflowWrap = 'break-word';
-        nameHighlight.style.lineHeight = '1.1';
-        nameHighlight.style.maxWidth = '100%';
-        nameHighlight.style.minHeight = '1.5rem';
+    function forceNameDisplay() {
+        // Aplicar estilos directamente
+        nameElement.style.cssText = `
+            display: inline-block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            color: transparent !important;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+            font-weight: 800 !important;
+            white-space: nowrap !important;
+            position: relative !important;
+            z-index: 10 !important;
+        `;
         
-        // Ajustar según el ancho de la pantalla
-        const screenWidth = window.innerWidth;
-        
-        if (screenWidth <= 393) {
-            // iPhone 14 Pro y similares
-            nameHighlight.style.fontSize = '1.4rem';
-            if (greetingText) greetingText.style.fontSize = '1rem';
-        } else if (screenWidth <= 430) {
-            // iPhone 14 Pro Max y similares
-            nameHighlight.style.fontSize = '1.6rem';
-            if (greetingText) greetingText.style.fontSize = '1.1rem';
-        } else if (screenWidth <= 480) {
-            // Pantallas móviles pequeñas
-            nameHighlight.style.fontSize = '1.8rem';
-            if (greetingText) greetingText.style.fontSize = '1.2rem';
+        // Ajustar tamaño según pantalla
+        const width = window.innerWidth;
+        if (width <= 393) {
+            nameElement.style.fontSize = '1.4rem !important';
+            nameElement.style.whiteSpace = 'normal !important';
+        } else if (width <= 480) {
+            nameElement.style.fontSize = '1.6rem !important';
+            nameElement.style.whiteSpace = 'normal !important';
+        } else if (width <= 768) {
+            nameElement.style.fontSize = '2rem !important';
         }
         
-        // Verificar si el texto se está mostrando
-        const rect = nameHighlight.getBoundingClientRect();
-        if (rect.width === 0 || rect.height === 0) {
-            // Si no se está mostrando, aplicar estilos más agresivos
-            nameHighlight.style.position = 'relative';
-            nameHighlight.style.zIndex = '10';
-            nameHighlight.style.backgroundColor = 'transparent';
-            nameHighlight.style.color = 'transparent';
-            nameHighlight.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-            nameHighlight.style.webkitBackgroundClip = 'text';
-            nameHighlight.style.webkitTextFillColor = 'transparent';
-            nameHighlight.style.backgroundClip = 'text';
+        // Verificar que el texto esté ahí
+        if (nameElement.textContent.trim() === '') {
+            nameElement.textContent = 'Ariel Matias Melo';
         }
     }
     
-    // Aplicar inmediatamente
-    forceNameVisibility();
+    // Ejecutar múltiples veces para asegurar
+    forceNameDisplay();
+    setTimeout(forceNameDisplay, 100);
+    setTimeout(forceNameDisplay, 500);
+    setTimeout(forceNameDisplay, 1000);
+    setTimeout(forceNameDisplay, 2000);
     
-    // Aplicar después de un pequeño retraso
-    setTimeout(forceNameVisibility, 200);
-    setTimeout(forceNameVisibility, 500);
-    setTimeout(forceNameVisibility, 1000);
+    // En cambio de tamaño
+    window.addEventListener('resize', forceNameDisplay);
     
-    // Aplicar al redimensionar
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(forceNameVisibility, 100);
-    });
-    
-    // Aplicar después de cambio de idioma
-    document.addEventListener('languageChanged', forceNameVisibility);
-    
-    // Aplicar cuando el DOM esté completamente cargado
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', forceNameVisibility);
-    }
+    // Cuando cambie el idioma
+    document.addEventListener('languageChanged', forceNameDisplay);
 }
 
 // ===== FUNCIONALIDAD COPIAR EMAIL =====
