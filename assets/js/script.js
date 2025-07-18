@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeMobileMenu();
     initializeParallaxEffects();
     initializeHeroStats();
+    initializeResponsiveTitle();
     
     // Inicializar sistema de traducción
     if (typeof i18next !== 'undefined') {
@@ -250,6 +251,63 @@ function initializeProjectInteractions() {
             card.style.transform = '';
         });
     });
+}
+
+// ===== RESPONSIVE TITLE ADJUSTMENT =====
+function initializeResponsiveTitle() {
+    const heroTitle = document.querySelector('.hero-title');
+    const nameHighlight = document.querySelector('.name-highlight');
+    
+    if (!heroTitle || !nameHighlight) return;
+    
+    function adjustTitleSize() {
+        // Resetear estilos para medir correctamente
+        nameHighlight.style.fontSize = '';
+        nameHighlight.style.whiteSpace = '';
+        nameHighlight.style.wordBreak = '';
+        nameHighlight.style.lineHeight = '';
+        
+        const containerWidth = heroTitle.offsetWidth;
+        const nameWidth = nameHighlight.scrollWidth;
+        
+        // Verificar si el nombre se desborda
+        if (nameWidth > containerWidth * 0.9) {
+            // Primero intentar reducir el tamaño de fuente
+            let fontSize = parseFloat(window.getComputedStyle(nameHighlight).fontSize);
+            const minFontSize = window.innerWidth < 320 ? 16 : 18;
+            
+            while (nameHighlight.scrollWidth > containerWidth * 0.9 && fontSize > minFontSize) {
+                fontSize -= 2;
+                nameHighlight.style.fontSize = fontSize + 'px';
+            }
+            
+            // Si aún no cabe después de reducir la fuente, permitir wrap
+            if (nameHighlight.scrollWidth > containerWidth * 0.9) {
+                nameHighlight.style.whiteSpace = 'normal';
+                nameHighlight.style.wordBreak = 'break-word';
+                nameHighlight.style.overflowWrap = 'break-word';
+                nameHighlight.style.lineHeight = '1.1';
+                nameHighlight.style.hyphens = 'auto';
+            }
+        }
+        
+        // Asegurar que el nombre esté visible
+        nameHighlight.style.visibility = 'visible';
+        nameHighlight.style.opacity = '1';
+    }
+    
+    // Ajustar inmediatamente
+    setTimeout(adjustTitleSize, 100);
+    
+    // Ajustar al redimensionar
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(adjustTitleSize, 200);
+    });
+    
+    // Ajustar después de cambio de idioma
+    document.addEventListener('languageChanged', adjustTitleSize);
 }
 
 // ===== FUNCIONALIDAD COPIAR EMAIL =====

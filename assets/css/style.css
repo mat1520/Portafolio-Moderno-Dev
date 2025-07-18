@@ -426,6 +426,16 @@ body::before {
   text-shadow: 0 0 40px rgba(99, 102, 241, 0.3);
 }
 
+.title-line {
+  display: block;
+  width: 100%;
+}
+
+.greeting-text {
+  display: inline;
+  color: var(--text-primary);
+}
+
 .highlight {
   background: var(--gradient-primary);
   -webkit-background-clip: text;
@@ -433,6 +443,22 @@ body::before {
   background-clip: text;
   position: relative;
   display: inline-block;
+}
+
+.mobile-break {
+  display: none;
+}
+
+.name-highlight {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  display: inline;
+  visibility: visible;
+  opacity: 1;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .highlight::after {
@@ -1520,6 +1546,42 @@ section {
     font-size: 0.9rem;
   }
   
+  .hero-title {
+    font-size: 2.5rem;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  
+  .title-line {
+    display: block;
+    width: 100%;
+  }
+  
+  .greeting-text {
+    display: block;
+    font-size: 1.2rem;
+    color: var(--text-primary);
+  }
+  
+  .name-highlight {
+    display: block;
+    font-size: 1.8rem;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.1;
+    max-width: 100%;
+  }
+  
+  .highlight {
+    display: inline-block;
+    word-break: normal;
+  }
+  
   .hero-buttons {
     justify-content: center;
     gap: 1rem;
@@ -1583,13 +1645,50 @@ section {
   :root {
     --container-padding: 1rem;
     --section-padding: 3rem;
-    --font-size-xl: clamp(2rem, 4vw, 2.8rem);
-    --font-size-lg: clamp(1.5rem, 3vw, 1.8rem);
-    --font-size-md: clamp(1rem, 2vw, 1.1rem);
+    --font-size-xl: clamp(1.8rem, 6vw, 2.5rem);
+    --font-size-lg: clamp(1.3rem, 4vw, 1.6rem);
+    --font-size-md: clamp(0.9rem, 3vw, 1.1rem);
   }
   
   .hero {
     min-height: 90vh;
+    padding: 2rem 0;
+  }
+  
+  .hero-title {
+    font-size: 2.2rem;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  
+  .title-line {
+    display: block;
+    width: 100%;
+  }
+  
+  .greeting-text {
+    display: block;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+  }
+  
+  .name-highlight {
+    display: block;
+    font-size: 1.6rem;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.1;
+    max-width: 100%;
+  }
+  
+  .highlight {
+    display: inline-block;
+    word-break: normal;
   }
   
   .hero-buttons {
@@ -1645,6 +1744,75 @@ section {
     width: 60px;
     height: 60px;
     font-size: 1.5rem;
+  }
+}
+
+/* ===== MEDIA QUERY PARA MÓVILES MUY PEQUEÑOS ===== */
+@media screen and (max-width: 320px) {
+  :root {
+    --font-size-xl: clamp(1.5rem, 7vw, 2.2rem);
+    --font-size-lg: clamp(1.2rem, 5vw, 1.5rem);
+    --container-padding: 0.8rem;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  
+  .title-line {
+    display: block;
+    width: 100%;
+  }
+  
+  .greeting-text {
+    display: block;
+    font-size: 1rem;
+    color: var(--text-primary);
+  }
+  
+  .name-highlight {
+    display: block;
+    font-size: 1.4rem;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.1;
+    max-width: 100%;
+  }
+  
+  .highlight {
+    display: inline-block;
+    word-break: normal;
+  }
+  
+  .hero-content {
+    padding: 0 0.5rem;
+  }
+  
+  /* Si el nombre es muy largo para pantallas muy pequeñas */
+  @media screen and (max-width: 280px) {
+    .hero-title {
+      font-size: 1.8rem;
+    }
+    
+    .greeting-text {
+      font-size: 0.9rem;
+    }
+    
+    .name-highlight {
+      font-size: 1.2rem;
+      white-space: normal;
+      word-break: break-word;
+      overflow-wrap: break-word;
+      line-height: 1.1;
+      max-width: 100%;
+    }
   }
 }
 
