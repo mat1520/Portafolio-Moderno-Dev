@@ -257,57 +257,76 @@ function initializeProjectInteractions() {
 function initializeResponsiveTitle() {
     const heroTitle = document.querySelector('.hero-title');
     const nameHighlight = document.querySelector('.name-highlight');
+    const greetingText = document.querySelector('.greeting-text');
     
     if (!heroTitle || !nameHighlight) return;
     
-    function adjustTitleSize() {
-        // Resetear estilos para medir correctamente
-        nameHighlight.style.fontSize = '';
-        nameHighlight.style.whiteSpace = '';
-        nameHighlight.style.wordBreak = '';
-        nameHighlight.style.lineHeight = '';
-        
-        const containerWidth = heroTitle.offsetWidth;
-        const nameWidth = nameHighlight.scrollWidth;
-        
-        // Verificar si el nombre se desborda
-        if (nameWidth > containerWidth * 0.9) {
-            // Primero intentar reducir el tamaño de fuente
-            let fontSize = parseFloat(window.getComputedStyle(nameHighlight).fontSize);
-            const minFontSize = window.innerWidth < 320 ? 16 : 18;
-            
-            while (nameHighlight.scrollWidth > containerWidth * 0.9 && fontSize > minFontSize) {
-                fontSize -= 2;
-                nameHighlight.style.fontSize = fontSize + 'px';
-            }
-            
-            // Si aún no cabe después de reducir la fuente, permitir wrap
-            if (nameHighlight.scrollWidth > containerWidth * 0.9) {
-                nameHighlight.style.whiteSpace = 'normal';
-                nameHighlight.style.wordBreak = 'break-word';
-                nameHighlight.style.overflowWrap = 'break-word';
-                nameHighlight.style.lineHeight = '1.1';
-                nameHighlight.style.hyphens = 'auto';
-            }
-        }
-        
-        // Asegurar que el nombre esté visible
+    function forceNameVisibility() {
+        // Forzar visibilidad del nombre
         nameHighlight.style.visibility = 'visible';
         nameHighlight.style.opacity = '1';
+        nameHighlight.style.display = 'block';
+        nameHighlight.style.whiteSpace = 'normal';
+        nameHighlight.style.wordBreak = 'break-word';
+        nameHighlight.style.overflowWrap = 'break-word';
+        nameHighlight.style.lineHeight = '1.1';
+        nameHighlight.style.maxWidth = '100%';
+        nameHighlight.style.minHeight = '1.5rem';
+        
+        // Ajustar según el ancho de la pantalla
+        const screenWidth = window.innerWidth;
+        
+        if (screenWidth <= 393) {
+            // iPhone 14 Pro y similares
+            nameHighlight.style.fontSize = '1.4rem';
+            if (greetingText) greetingText.style.fontSize = '1rem';
+        } else if (screenWidth <= 430) {
+            // iPhone 14 Pro Max y similares
+            nameHighlight.style.fontSize = '1.6rem';
+            if (greetingText) greetingText.style.fontSize = '1.1rem';
+        } else if (screenWidth <= 480) {
+            // Pantallas móviles pequeñas
+            nameHighlight.style.fontSize = '1.8rem';
+            if (greetingText) greetingText.style.fontSize = '1.2rem';
+        }
+        
+        // Verificar si el texto se está mostrando
+        const rect = nameHighlight.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) {
+            // Si no se está mostrando, aplicar estilos más agresivos
+            nameHighlight.style.position = 'relative';
+            nameHighlight.style.zIndex = '10';
+            nameHighlight.style.backgroundColor = 'transparent';
+            nameHighlight.style.color = 'transparent';
+            nameHighlight.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            nameHighlight.style.webkitBackgroundClip = 'text';
+            nameHighlight.style.webkitTextFillColor = 'transparent';
+            nameHighlight.style.backgroundClip = 'text';
+        }
     }
     
-    // Ajustar inmediatamente
-    setTimeout(adjustTitleSize, 100);
+    // Aplicar inmediatamente
+    forceNameVisibility();
     
-    // Ajustar al redimensionar
+    // Aplicar después de un pequeño retraso
+    setTimeout(forceNameVisibility, 200);
+    setTimeout(forceNameVisibility, 500);
+    setTimeout(forceNameVisibility, 1000);
+    
+    // Aplicar al redimensionar
     let resizeTimeout;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(adjustTitleSize, 200);
+        resizeTimeout = setTimeout(forceNameVisibility, 100);
     });
     
-    // Ajustar después de cambio de idioma
-    document.addEventListener('languageChanged', adjustTitleSize);
+    // Aplicar después de cambio de idioma
+    document.addEventListener('languageChanged', forceNameVisibility);
+    
+    // Aplicar cuando el DOM esté completamente cargado
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', forceNameVisibility);
+    }
 }
 
 // ===== FUNCIONALIDAD COPIAR EMAIL =====

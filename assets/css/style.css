@@ -461,6 +461,21 @@ body::before {
   max-width: 100%;
 }
 
+/* Regla de emergencia para asegurar visibilidad del nombre */
+.hero-title .name-highlight {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  color: transparent !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  font-weight: 700 !important;
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
 .highlight::after {
   content: '';
   position: absolute;
@@ -1504,6 +1519,96 @@ section {
   .about-highlights {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+  }
+}
+
+/* ===== MEDIA QUERY ESPECÍFICO PARA IPHONE 14 PRO Y SIMILARES ===== */
+@media screen and (max-width: 393px) {
+  .hero-title {
+    font-size: 2rem !important;
+    line-height: 1.1 !important;
+    margin-bottom: 1.5rem !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.3rem !important;
+  }
+  
+  .title-line {
+    display: block !important;
+    width: 100% !important;
+  }
+  
+  .greeting-text {
+    display: block !important;
+    font-size: 1rem !important;
+    color: var(--text-primary) !important;
+  }
+  
+  .name-highlight {
+    display: block !important;
+    font-size: 1.4rem !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    line-height: 1.1 !important;
+    max-width: 100% !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    min-height: 1.6rem !important;
+  }
+  
+  .highlight {
+    display: inline-block !important;
+    word-break: normal !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+  }
+}
+
+/* ===== MEDIA QUERY ESPECÍFICO PARA IPHONE ===== */
+@media screen and (max-width: 430px) {
+  .hero-title {
+    font-size: 2.2rem !important;
+    line-height: 1.1 !important;
+    margin-bottom: 1.5rem !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.3rem !important;
+  }
+  
+  .title-line {
+    display: block !important;
+    width: 100% !important;
+  }
+  
+  .greeting-text {
+    display: block !important;
+    font-size: 1.1rem !important;
+    color: var(--text-primary) !important;
+  }
+  
+  .name-highlight {
+    display: block !important;
+    font-size: 1.6rem !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    line-height: 1.1 !important;
+    max-width: 100% !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    min-height: 1.8rem !important;
+  }
+  
+  .highlight {
+    display: inline-block !important;
+    word-break: normal !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
   }
 }
 
